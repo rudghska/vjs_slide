@@ -16,10 +16,9 @@ ul {
 }
 
 .slider {
-  width: 3000px;
+  width: 4200px;
   height: 500px;
   display: flex;
-  transition: transform 300ms ease;
 }
 
 .slide {
@@ -30,24 +29,32 @@ ul {
 }
 
 .slide:nth-child(1) {
-  background-color: red;
+  background-color: black;
 }
 
 .slide:nth-child(2) {
-  background-color: yellowgreen;
+  background-color: red;
 }
 
 .slide:nth-child(3) {
-  background-color: yellow;
+  background-color: yellowgreen;
 }
 
 .slide:nth-child(4) {
-  background-color: orange;
+  background-color: yellow;
 }
 
 .slide:nth-child(5) {
+  background-color: orange;
+}
+
+.slide:nth-child(6) {
   color: white;
   background-color: black;
+}
+
+.slide:nth-child(7) {
+  background-color: red;
 }
 
 .buttons {
