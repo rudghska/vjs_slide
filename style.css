@@ -3,11 +3,16 @@ body {
   justify-content: center;
 }
 
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
 .container {
   width: 600px;
-  display: flex;
-  overflow: hidden;
   position: relative;
+  overflow: hidden;
 }
 
 .slider {
@@ -48,15 +53,19 @@ body {
 .buttons {
   display: flex;
   position: absolute;
-  bottom: 10px;
+  bottom: -40px;
   left: 230px;
   z-index: 10;
+}
+
+#box {
+  position: relative;
 }
 
 .btn {
   width: 25px;
   height: 25px;
-  background-color: #fff;
+  background-color: lightgrey;
   border-radius: 50%;
   margin-right: 5px;
   cursor: pointer;
@@ -65,5 +74,24 @@ body {
 }
 
 .btn:hover {
-  opacity: 0.8;
+  background-color: black;
+}
+
+#prev,
+#next {
+  position: absolute;
+  height: 60px;
+  padding: 0 20px;
+  border-radius: 10px;
+  font-weight: bold;
+}
+
+#next {
+  top: 250px;
+  right: -100px;
+}
+
+#prev {
+  top: 250px;
+  left: -100px;
 }
