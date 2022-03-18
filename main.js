@@ -14,61 +14,44 @@ let beforeBtn = currentBtn[0];
 currentBtn[0].style.backgroundColor = 'black';
 slider.style.transform = `translateX(-${SLIDE_SIZE * counter}px)`;
 
-function setButtonColor(ele, beforeCounter, curCounter = counter - 1) {
-  ele[beforeCounter].style.backgroundColor = 'lightgrey';
-  ele[curCounter].style.backgroundColor = 'black';
-  beforeBtn = ele[curCounter];
-}
-
 function slideElement(counter) {
-  slider.style.transition = 'none';
+  let btnCounter = counter;
+
   slider.style.transform = `translateX(${-counter * SLIDE_SIZE}px)`;
+
+  if (btnCounter === 6) btnCounter = 1;
+  if (btnCounter === 0) btnCounter = 5;
+
+  console.log(btnCounter);
   beforeBtn.style.backgroundColor = 'lightgrey';
-  currentBtn[counter - 1].style.backgroundColor = 'black';
-  beforeBtn = currentBtn[counter - 1];
+  currentBtn[btnCounter - 1].style.backgroundColor = 'black';
+  beforeBtn = currentBtn[btnCounter - 1];
 }
 
 btn.addEventListener('click', e => {
   if (e.target === e.currentTarget) return;
-
   slider.style.transition = `transform 0.4s ease-in-out`;
-
-  beforeBtn.style.backgroundColor = 'lightgrey';
-  beforeBtn = e.target;
   counter = parseInt(e.target.classList[1]);
-  slider.style.transform = `translateX(-${SLIDE_SIZE * counter}px)`;
-  e.target.style.backgroundColor = 'black';
+  slideElement(counter);
 });
 
 nextBtn.addEventListener('click', () => {
   slider.style.transition = `transform 0.4s ease-in-out`;
-  counter++;
-
-  if (counter === slideElems.length) counter--;
-
-  if (counter < 6) {
-    setButtonColor(currentBtn, counter - 2);
-  }
-  slider.style.transform = `translateX(${-counter * SLIDE_SIZE}px)`;
+  ++counter === slideElems.length ? slideElement(counter--) : slideElement(counter);
 });
 
 prevBtn.addEventListener('click', () => {
   slider.style.transition = `transform 0.4s ease-in-out`;
-  counter--;
-
-  if (counter === -1) counter++;
-
-  if (counter > 0) {
-    setButtonColor(currentBtn, counter);
-  }
-  slider.style.transform = `translateX(${-counter * SLIDE_SIZE}px)`;
+  --counter === slideElems.length ? slideElement(counter++) : slideElement(counter);
 });
 
 slider.addEventListener('transitionend', e => {
   if (slideElems[counter].id === 'lastSlide') {
+    slider.style.transition = 'none';
     slideElement((counter = 1));
   }
   if (slideElems[counter].id === 'firstSlide') {
-    slideElement((counter = slideElement.length - 2));
+    slider.style.transition = 'none';
+    slideElement((counter = slideElems.length - 2));
   }
 });
