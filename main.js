@@ -14,6 +14,8 @@ let beforeBtn = currentBtn[0];
 currentBtn[0].style.backgroundColor = 'black';
 slider.style.transform = `translateX(-${SLIDE_SIZE * counter}px)`;
 
+// button event & slideElement 함수 리팩토링
+
 function slideElement(counter) {
   let btnCounter = counter;
 
