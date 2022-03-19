@@ -33,55 +33,59 @@ function slideElement(counter) {
   beforeBtn = currentBtn[btnCounter - 1];
 }
 
+function dragStart(e) {
+  firstPosX = posX1 = e.clientX;
+  document.onmousemove = dragAction;
+  document.onmouseup = dragEnd;
+}
+
+function dragAction(e) {
+  posX2 = posX1 - e.clientX;
+  posX1 = e.clientX;
+  slider.style.transform = `translateX(-${(currentPos += posX2)}px)`;
+}
+
+function dragEnd() {
+  slider.classList.add('move');
+
+  if (firstPosX - posX1 > MOVE_XPOS) {
+    slideElement(++counter);
+  } else if (firstPosX - posX1 < -MOVE_XPOS) {
+    slideElement(--counter);
+  } else {
+    slideElement(counter);
+  }
+  document.onmouseup = null;
+  document.onmousemove = null;
+}
+
 btn.addEventListener('click', e => {
   if (e.target === e.currentTarget) return;
-  slider.style.transition = `transform 0.3s ease-in-out`;
+  slider.classList.add('move');
   counter = parseInt(e.target.classList[1]);
   slideElement(counter);
 });
 
 nextBtn.addEventListener('click', () => {
-  slider.style.transition = `transform 0.3s ease-in-out`;
+  slider.classList.add('move');
   ++counter === slideElems.length ? slideElement(--counter) : slideElement(counter);
 });
 
 prevBtn.addEventListener('click', () => {
-  slider.style.transition = `transform 0.3s ease-in-out`;
   if (counter === 0) counter = 1;
+  slider.classList.add('move');
   --counter === slideElems.length ? slideElement(++counter) : slideElement(counter);
 });
 
 slider.addEventListener('transitionend', e => {
+  slider.classList.remove('move');
+
   if (slideElems[counter].id === 'lastSlide') {
-    slider.style.transition = 'none';
     slideElement((counter = 1));
   }
   if (slideElems[counter].id === 'firstSlide') {
-    slider.style.transition = 'none';
     slideElement((counter = slideElems.length - 2));
   }
 });
 
-slider.addEventListener('mousedown', e => {
-  slider.style.transition = 'none';
-  firstPosX = posX1 = e.clientX;
-
-  document.onmousemove = e => {
-    posX2 = posX1 - e.clientX;
-    posX1 = e.clientX;
-    slider.style.transform = `translateX(-${(currentPos += posX2)}px)`;
-  };
-  document.onmouseup = e => {
-    slider.style.transition = `transform 0.3s ease-in-out`;
-
-    if (firstPosX - posX1 > MOVE_XPOS) {
-      slideElement(++counter);
-    } else if (firstPosX - posX1 < -MOVE_XPOS) {
-      slideElement(--counter);
-    } else {
-      slideElement(counter);
-    }
-    document.onmouseup = null;
-    document.onmousemove = null;
-  };
-});
+slider.addEventListener('mousedown', dragStart);

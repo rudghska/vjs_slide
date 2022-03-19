@@ -21,6 +21,10 @@ ul {
   display: flex;
 }
 
+.slider.move {
+  transition: all 0.3s;
+}
+
 .slide {
   font-size: 50px;
   text-align: center;
@@ -30,6 +34,7 @@ ul {
 }
 
 .slide:nth-child(1) {
+  color: white;
   background-color: black;
 }
 
